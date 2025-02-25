@@ -1,0 +1,27 @@
+.courses-cards {
+    padding: 1rem;
+
+    .card {
+        padding: 0.5rem;
+        border-radius: 1rem;
+        position: relative;
+    }
+
+    .card-image {
+        border-radius: 1rem;
+    }
+
+    .card-text {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background: #FFFFFF4D;
+        backdrop-filter: blur(15px);
+        color: #333;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        border-radius: 1rem;
+        padding: 20px 10px;
+        text-align: center;
+    }
+}

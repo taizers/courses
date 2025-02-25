@@ -1,0 +1,7 @@
+.event-image {
+    object-fit: cover;
+    max-height: 250px;
+    width: auto;
+    max-width: 100%;
+    border-radius: 10px;
+}
