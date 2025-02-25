@@ -16,4 +16,4 @@
    ```npm run build```
 4. Start the built server:
    ```npm run preview```
-5. Access the application at http://localhost:3000.
+5. Access the application at http://localhost:5174.
