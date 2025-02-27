@@ -13,7 +13,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     updateTutor: builder.mutation({
       query: ({data, id}) => ({
         url: `/admin/tutor/${id}`,
-        method: 'PATH',
+        method: 'POST',
         body: data,
       }),
       invalidatesTags: ['Tutor'],
@@ -41,7 +41,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     updateEvent: builder.mutation({
       query: ({data, id}) => ({
         url: `/event/${id}`,
-        method: 'PATH',
+        method: 'POST',
         body: data,
       }),
       invalidatesTags: ['Event'],
@@ -64,7 +64,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     updateCourse: builder.mutation({
       query: ({data, id}) => ({
         url: `/course/${id}`,
-        method: 'PATH',
+        method: 'POST',
         body: data,
       }),
       invalidatesTags: ['Course'],
