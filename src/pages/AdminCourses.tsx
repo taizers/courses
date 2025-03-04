@@ -64,11 +64,31 @@ const AdminCourses: FC = () => {
         deleteCourse(id);
     };
 
+    const onDownloadCourses = () => {
+        if (!data?.length) return;
+
+        const json = JSON.stringify(data, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'courses.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        URL.revokeObjectURL(url);
+    };
+
     return (
         <div className={'py-16 px-6 sm:px-12 max-w-screen-xl mx-auto'}>
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Курсы</h2>
-                <Button className={'text-black'} onClick={openModal}>Создать курс</Button>
+                <div style={{display: 'flex', gap: '10px'}}>
+                    {!!data?.length && <Button className={'text-black'} onClick={onDownloadCourses}>Выгрузить курсы</Button>}
+                    <Button className={'text-black'} onClick={openModal}>Создать курс</Button>
+                </div>
             </div>
 
             {!!data?.length && <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-400 mx-auto">
