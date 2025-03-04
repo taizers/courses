@@ -2,6 +2,14 @@ import { apiSlice } from '../api/apiSlice';
 
 export const adminApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    importCourses: builder.mutation({
+      query: (credentials) => ({
+        url: '/course/import',
+        method: 'POST',
+        body: credentials,
+      }),
+      invalidatesTags: ['Course'],
+    }),
     createTutor: builder.mutation({
       query: (credentials) => ({
         url: '/admin/tutor',

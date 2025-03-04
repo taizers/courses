@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import CreateUpdateCourseModal from "../modals/CreateUpdateCourseModal.tsx";
 import {ICourse} from "../models.ts";
+import {createToast} from "../utils/toasts.ts";
 
 const AdminCourses: FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -19,6 +20,8 @@ const AdminCourses: FC = () => {
 
     const { data, error } = adminApiSlice.useGetAllCoursesQuery<useGetQueryResponse<ICourse[]>>('');
 
+    const [importCourses, { data: importCoursesData, error: importCoursesError }] =
+        adminApiSlice.useImportCoursesMutation();
     const [createCourse, { data: createCourseData, error: createCourseError, isLoading: createCourseIsLoading }] =
         adminApiSlice.useCreateCourseMutation();
     const [updateCourse, { data: updateCourseData, error: updateCourseError, isLoading: updateCourseIsLoading }] =
@@ -30,6 +33,13 @@ const AdminCourses: FC = () => {
     useShowErrorToast(createCourseError);
     useShowErrorToast(updateCourseError);
     useShowErrorToast(deleteCourseError);
+    useShowErrorToast(importCoursesError);
+
+    useEffect(() => {
+        if (importCoursesData) {
+            createToast.success('Загружено');
+        }
+    }, [importCoursesData]);
 
     useEffect(() => {
         setSubmittingRef.current && setSubmittingRef.current(false);
@@ -65,20 +75,7 @@ const AdminCourses: FC = () => {
     };
 
     const onDownloadCourses = () => {
-        if (!data?.length) return;
-
-        const json = JSON.stringify(data, null, 2);
-        const blob = new Blob([json], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'courses.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        URL.revokeObjectURL(url);
+        importCourses(data);
     };
 
     return (
@@ -86,7 +83,7 @@ const AdminCourses: FC = () => {
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Курсы</h2>
                 <div style={{display: 'flex', gap: '10px'}}>
-                    {!!data?.length && <Button className={'text-black'} onClick={onDownloadCourses}>Выгрузить курсы</Button>}
+                    <Button className={'text-black'} onClick={onDownloadCourses}>Загрузить курсы</Button>
                     <Button className={'text-black'} onClick={openModal}>Создать курс</Button>
                 </div>
             </div>
