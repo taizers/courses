@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '../hooks.ts';
 import { setMenuHeight } from '../store/reducers/AppSlice.ts';
 import { getLoginIcon, getUserIcon } from "../utils/Icons.tsx";
 import AuthModal from "../modals/AuthModal.tsx";
+import {adminApiSlice} from "../store/reducers/AdminApiSlice.ts";
+import {localLogout} from "../store/reducers/AuthSlice.ts";
 
 const pages = [
     { link: '/courses', label: 'Курсы' },
@@ -103,7 +105,13 @@ const Menu: FC = () => {
     const onEventsClick = () => {
         setIsUserMenuOpen(false);
         history('/admin-events');
-    }
+    };
+
+    const onLogoutClick = () => {
+        setIsUserMenuOpen(false);
+        dispatch(localLogout());
+        history('/');
+    };
 
     return (
         <>
@@ -137,6 +145,9 @@ const Menu: FC = () => {
                                             </li>
                                             <li onClick={onUsersClick} className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
                                                 Пользователи
+                                            </li>
+                                            <li onClick={onLogoutClick} className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
+                                                Выйти
                                             </li>
                                         </ul>
                                     </div>

@@ -1,18 +1,27 @@
-import { events } from '../mocks.ts';
 import { Link } from 'react-router-dom';
 import {adminApiSlice} from "../store/reducers/AdminApiSlice.ts";
 import {useGetQueryResponse} from "../types.ts";
 import {useShowErrorToast} from "../hooks.ts";
 import NoData from "../components/NoData.tsx";
+import SearchField from "../components/SearchField.tsx";
+import {useMemo, useState} from "react";
 
 const Events = () => {
     const { data, error } = adminApiSlice.useGetAllEventsQuery<useGetQueryResponse<any[]>>('');
+    const [search, setSearch] = useState("");
+
+    const filteredEvents = useMemo(() => {
+        return data?.filter(course =>
+            course.name.toLowerCase().includes(search.toLowerCase())
+        ) || [];
+    }, [data, search]);
 
     useShowErrorToast(error);
 
     return (
         <div className="max-w-screen-md mx-auto p-4 space-y-4">
-            {data?.map((event) => (
+            <SearchField search={search} setSearch={setSearch} placeholder={'Поиск события'} />
+            {filteredEvents?.map((event) => (
                 <div key={event.id} className="p-4 border rounded-lg shadow-md bg-white relative flex flex-col">
                     <h3 className="text-lg font-bold mb-2">{event.name}</h3>
                     <div className="w-full overflow-hidden rounded-md flex justify-center">
@@ -28,7 +37,7 @@ const Events = () => {
                     <p className="text-gray-500 text-xs absolute bottom-4 right-4 italic">{new Date(event.dateOfEvent).toLocaleDateString()}</p>
                 </div>
             ))}
-            {!data?.length && <NoData />}
+            {!filteredEvents?.length && <NoData />}
         </div>
     );
 };
