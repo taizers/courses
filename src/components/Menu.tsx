@@ -19,6 +19,7 @@ const userMenuItems = [
     { link: '/profile', label: 'Профиль' },
     { link: '/admin-courses', label: 'Курсы' },
     { link: '/admin-events', label: 'События' },
+    { link: '/admin-tutors', label: 'Преподаватели' },
     { link: '/users', label: 'Пользователи' },
     { link: '/', label: 'Выйти' },
 ];
