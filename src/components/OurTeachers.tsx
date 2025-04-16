@@ -7,7 +7,7 @@ import { useShowErrorToast } from '../hooks.ts';
 import NoData from './NoData.tsx';
 
 const OurTeachers: FC = () => {
-    const { data: tutors, error: tutorsError } = adminApiSlice.useGetTutorsInfoQuery<useGetQueryResponse<ITutor[]>>('');
+    const { data: tutors, error: tutorsError } = adminApiSlice.useGetAllTutorsQuery<useGetQueryResponse<ITutor[]>>('');
 
     useShowErrorToast(tutorsError);
 

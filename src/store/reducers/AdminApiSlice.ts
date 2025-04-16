@@ -26,6 +26,20 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Tutor'],
     }),
+    getProfile: builder.query({
+      query: () => ({
+        url: '/profile',
+      }),
+      providesTags: ['Profile'],
+    }),
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: '/profile',
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['Event'],
+    }),
     getAllTutors: builder.query({
       query: () => ({
         url: '/admin/tutors',

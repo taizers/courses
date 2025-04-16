@@ -16,6 +16,19 @@ export interface ICourse {
     tutorUsername: string;
 }
 
+export interface IUser {
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    age: number;
+    role: string;
+    isActive: boolean;
+    image: string;
+}
+
 export interface ITutor {
     id: number;
     username: string;
@@ -25,7 +38,7 @@ export interface ITutor {
     email: string;
     phone: string;
     age: number;
-    isActive: number;
+    isActive: boolean;
     image: string;
 }
 

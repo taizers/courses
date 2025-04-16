@@ -315,3 +315,28 @@ export const tutorEditFields = [
     { name: 'age', type: 'number', placeholder: 'Введите возраст', label: 'Возраст' },
     { name: 'phone', label: 'Телефон', placeholder: 'Введите телефон', type: 'text' }
 ];
+
+export const profileValidationSchema = Yup.object({
+    firstName: Yup.string().required('Имя обязательно'),
+    lastName: Yup.string().required('Фамилия обязательна'),
+    age: Yup.number()
+      .min(18, 'Возраст должен быть 18 лет или больше')
+      .required('Обязательное поле'),
+    phone: Yup.string()
+      .matches(/^\+?\d{1,4}?\s?\(?\d{1,5}?\)?\s?\d{1,4}?\s?\d{1,4}?\s?\d{1,9}$/, 'Неверный формат номера телефона')
+      .required('Телефон обязателен'),
+    image: Yup.mixed()
+      .nullable()
+      .test('fileFormat', 'Поддерживаются только изображения форматов .jpg, .jpeg, .png', (value) => {
+          if (!value) return true;
+          return value instanceof File && ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
+      }),
+});
+
+export const profileFields = [
+    { name: 'firstName', label: 'Имя', placeholder: 'Введите имя', type: 'text' },
+    { name: 'lastName', label: 'Фамилия', placeholder: 'Введите фамилию', type: 'text' },
+    { name: 'phone', label: 'Телефон', placeholder: 'Введите телефон', type: 'text' },
+    { name: 'age', type: 'number', placeholder: 'Введите возраст', label: 'Возраст' },
+    { name: 'image', label: 'Изображение', type: 'file' },
+];
