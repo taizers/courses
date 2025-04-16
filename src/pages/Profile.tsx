@@ -11,9 +11,9 @@ import EditIcon from '@mui/icons-material/Edit';
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const { data: profile, error } = adminApiSlice.useGetAllTutorsQuery<useGetQueryResponse<IUser>>('');
+  const { data: profile, error } = adminApiSlice.useGetProfileQuery<useGetQueryResponse<IUser>>('');
 
-  const [updateProfile, { data: updateProfileData, error: updateProfileError, isLoading: updateProflieLoading }] =
+  const [updateProfile, { data: updateProfileData, error: updateProfileError, isLoading: updateProfileLoading }] =
     adminApiSlice.useUpdateProfileMutation();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Profile = () => {
       {!profile && <NoData />}
       {profile && (
         <>
-          <UpdateProfileModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} profile={profile} isLoading={updateProflieLoading} onUpdateAction={updateProfile} />
+          <UpdateProfileModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} profile={profile} isLoading={updateProfileLoading} onUpdateAction={updateProfile} />
           <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col md:flex-row items-center gap-6 p-6">
               <img
