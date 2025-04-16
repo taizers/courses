@@ -13,4 +13,24 @@ export interface ICourse {
     startDate: Date | string;
     endDate: Date | string;
     image: string;
+    tutorUsername: string;
+}
+
+export interface ITutor {
+    id: number;
+    username: string;
+    firstname: string;
+    lastname: string;
+    password: string;
+    email: string;
+    phone: string;
+    age: number;
+    isActive: number;
+    image: string;
+}
+
+export interface ITutorShort {
+    username: string;
+    firstname: string;
+    lastname: string;
 }

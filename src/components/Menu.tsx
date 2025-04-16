@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../hooks.ts';
 import { setMenuHeight } from '../store/reducers/AppSlice.ts';
 import { getLoginIcon, getUserIcon } from "../utils/Icons.tsx";
 import AuthModal from "../modals/AuthModal.tsx";
-import {adminApiSlice} from "../store/reducers/AdminApiSlice.ts";
 import {localLogout} from "../store/reducers/AuthSlice.ts";
 
 const pages = [
@@ -14,6 +13,14 @@ const pages = [
     { link: '/events', label: 'Праздники' },
     { link: '/contacts', label: 'Контакты' },
     { link: '/about-us', label: 'О нас' },
+];
+
+const userMenuItems = [
+    { link: '/profile', label: 'Профиль' },
+    { link: '/admin-courses', label: 'Курсы' },
+    { link: '/admin-events', label: 'События' },
+    { link: '/users', label: 'Пользователи' },
+    { link: '/', label: 'Выйти' },
 ];
 
 const Menu: FC = () => {
@@ -44,7 +51,7 @@ const Menu: FC = () => {
     }, []);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: any) => {
             if (
                 userMenuRef.current &&
                 !userMenuRef.current.contains(event.target as Node) &&
@@ -56,7 +63,7 @@ const Menu: FC = () => {
                 !event.target.closest('#mega-menu-icons') &&
                 !event.target.closest('.p-2')
             ) {
-                setIsMobileMenuOpen(false); // скрыть мобильное меню при клике вне меню
+                setIsMobileMenuOpen(false);
             }
         };
 
@@ -72,7 +79,7 @@ const Menu: FC = () => {
     const onNavClick = (e: any, link: string) => {
         e.preventDefault();
         history(link);
-        setIsMobileMenuOpen(false); // Закрыть мобильное меню при клике на ссылку
+        setIsMobileMenuOpen(false);
     };
 
     const onLogoClick = (e: any) => {
@@ -89,29 +96,16 @@ const Menu: FC = () => {
     };
 
     const toggleMobileMenu = () => {
-        setIsMobileMenuOpen((prev) => !prev); // переключение мобильного меню
+        setIsMobileMenuOpen((prev) => !prev);
     };
 
-    const onUsersClick = () => {
+    const onUserMenuClick = (data: {link: string, label: string}) => {
+        if (data.label === 'Выйти') {
+            dispatch(localLogout());
+        }
         setIsUserMenuOpen(false);
-        history('/users');
+        history(data.link);
     }
-
-    const onCoursesClick = () => {
-        setIsUserMenuOpen(false);
-        history('/admin-courses');
-    }
-
-    const onEventsClick = () => {
-        setIsUserMenuOpen(false);
-        history('/admin-events');
-    };
-
-    const onLogoutClick = () => {
-        setIsUserMenuOpen(false);
-        dispatch(localLogout());
-        history('/');
-    };
 
     return (
         <>
@@ -134,21 +128,15 @@ const Menu: FC = () => {
                                 {isUserMenuOpen && (
                                     <div ref={userMenuRef} className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border dark:bg-gray-800 z-20">
                                         <ul className="py-2">
-                                            <li className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-                                                Профиль
-                                            </li>
-                                            <li onClick={onCoursesClick} className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-                                                Курсы
-                                            </li>
-                                            <li onClick={onEventsClick} className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-                                                События
-                                            </li>
-                                            <li onClick={onUsersClick} className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-                                                Пользователи
-                                            </li>
-                                            <li onClick={onLogoutClick} className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-                                                Выйти
-                                            </li>
+                                            {
+                                                userMenuItems.map(item => {
+                                                    return (
+                                                      <li onClick={() => onUserMenuClick(item)} className="px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
+                                                          {item.label}
+                                                      </li>
+                                                    );
+                                                })
+                                            }
                                         </ul>
                                     </div>
                                 )}

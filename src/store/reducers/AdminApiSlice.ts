@@ -21,7 +21,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     updateTutor: builder.mutation({
       query: ({data, id}) => ({
         url: `/admin/tutor/${id}`,
-        method: 'POST',
+        method: 'PATCH',
         body: data,
       }),
       invalidatesTags: ['Tutor'],
@@ -29,6 +29,18 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     getAllTutors: builder.query({
       query: () => ({
         url: '/admin/tutors',
+      }),
+      providesTags: ['Tutor'],
+    }),
+    getAllTutorsShort: builder.query({
+      query: () => ({
+        url: '/admin/tutors/short',
+      }),
+      providesTags: ['Tutor'],
+    }),
+    getTutorsInfo: builder.query({
+      query: () => ({
+        url: '/admin/tutors/info',
       }),
       providesTags: ['Tutor'],
     }),
@@ -103,6 +115,21 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
       }),
       invalidatesTags: ['Event'],
+    }),
+    deleteTutor: builder.mutation({
+      query: (id) => ({
+        url: `/tutors/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Tutor'],
+    }),
+    changePersonStatus: builder.mutation({
+      query: (username) => ({
+        url: '/admin/person-status',
+        method: 'POST',
+        body: {username}
+      }),
+      invalidatesTags: ['Tutor'],
     }),
   }),
 });

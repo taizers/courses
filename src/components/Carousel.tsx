@@ -74,7 +74,7 @@ const Carousel: FC<ThisProps> = ({cards, title = '', autoplay = true, indicators
                                 className="flex flex-col items-center bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 lg:w-1/3 w-full"
                             >
                                 <div
-                                    className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200 dark:border-gray-700 mb-4">
+                                    className="w-32 h-48 overflow-hidden rounded-lg border-4 border-gray-200 dark:border-gray-700 mb-4">
                                     <img
                                         src={card.image}
                                         alt={`Фото преподавателя ${card.name}`}

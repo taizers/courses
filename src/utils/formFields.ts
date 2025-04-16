@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export interface FormField {
     name: string;
     type: string;
-    placeholder: string;
+    placeholder?: string;
     label: string;
     options?: {
         value: string;
@@ -258,5 +258,60 @@ export const userFields = [
     { name: 'lastName', label: 'Фамилия', placeholder: 'Введите фамилию', type: 'text' },
     { name: 'password', label: 'Пароль', placeholder: 'Введите пароль', type: 'password' },
     { name: 'email', label: 'Электронная почта', placeholder: 'Введите электронную почту', type: 'email' },
+    { name: 'phone', label: 'Телефон', placeholder: 'Введите телефон', type: 'text' }
+];
+
+export const tutorValidationSchema = Yup.object({
+    username: Yup.string().required('Имя пользователя обязательно'),
+    firstName: Yup.string().required('Имя обязательно'),
+    lastName: Yup.string().required('Фамилия обязательна'),
+    age: Yup.number()
+      .min(18, 'Возраст должен быть 18 лет или больше')
+      .required('Обязательное поле'),
+    password: Yup.string().min(6, 'Пароль должен содержать минимум 6 символов').required('Пароль обязателен'),
+    email: Yup.string().email('Неверный формат электронной почты').required('Электронная почта обязательна'),
+    phone: Yup.string()
+      .matches(/^\+?\d{1,4}?\s?\(?\d{1,5}?\)?\s?\d{1,4}?\s?\d{1,4}?\s?\d{1,9}$/, 'Неверный формат номера телефона')
+      .required('Телефон обязателен'),
+    image: Yup.mixed()
+      .required('Изображение обязательно')
+      .test('fileFormat', 'Поддерживаются только изображения форматов .jpg, .jpeg, .png',
+        (value) => {
+            return value && ['image/jpeg', 'image/png', 'image/jpg'].includes((value as File).type);
+        })
+});
+
+export const tutorEditValidationSchema = Yup.object({
+    username: Yup.string().required('Имя пользователя обязательно'),
+    firstName: Yup.string().required('Имя обязательно'),
+    lastName: Yup.string().required('Фамилия обязательна'),
+    age: Yup.number()
+      .min(18, 'Возраст должен быть 18 лет или больше')
+      .required('Обязательное поле'),
+    password: Yup.string().min(6, 'Пароль должен содержать минимум 6 символов').required('Пароль обязателен'),
+    email: Yup.string().email('Неверный формат электронной почты').required('Электронная почта обязательна'),
+    phone: Yup.string()
+      .matches(/^\+?\d{1,4}?\s?\(?\d{1,5}?\)?\s?\d{1,4}?\s?\d{1,4}?\s?\d{1,9}$/, 'Неверный формат номера телефона')
+      .required('Телефон обязателен'),
+});
+
+export const tutorFields = [
+    { name: 'username', label: 'Имя пользователя', placeholder: 'Введите имя пользователя', type: 'text' },
+    { name: 'firstName', label: 'Имя', placeholder: 'Введите имя', type: 'text' },
+    { name: 'lastName', label: 'Фамилия', placeholder: 'Введите фамилию', type: 'text' },
+    { name: 'password', label: 'Пароль', placeholder: 'Введите пароль', type: 'password' },
+    { name: 'email', label: 'Электронная почта', placeholder: 'Введите электронную почту', type: 'email' },
+    { name: 'phone', label: 'Телефон', placeholder: 'Введите телефон', type: 'text' },
+    { name: 'age', type: 'number', placeholder: 'Введите возраст', label: 'Возраст' },
+    { name: 'image', label: 'Изображение', type: 'file' },
+];
+
+export const tutorEditFields = [
+    { name: 'username', label: 'Имя пользователя', placeholder: 'Введите имя пользователя', type: 'text' },
+    { name: 'firstName', label: 'Имя', placeholder: 'Введите имя', type: 'text' },
+    { name: 'lastName', label: 'Фамилия', placeholder: 'Введите фамилию', type: 'text' },
+    { name: 'password', label: 'Пароль', placeholder: 'Введите пароль', type: 'password' },
+    { name: 'email', label: 'Электронная почта', placeholder: 'Введите электронную почту', type: 'email' },
+    { name: 'age', type: 'number', placeholder: 'Введите возраст', label: 'Возраст' },
     { name: 'phone', label: 'Телефон', placeholder: 'Введите телефон', type: 'text' }
 ];

@@ -1,4 +1,4 @@
-import {FC, MutableRefObject} from 'react';
+import { FC, useMemo } from 'react';
 import { Modal, Button } from 'flowbite-react';
 import { Formik, Form } from 'formik';
 import FormFieldComponent from '../components/FormFieldComponent/FormFieldComponent.tsx';
@@ -8,14 +8,15 @@ import {
     courseFields,
     courseValidationSchema
 } from '../utils/formFields.ts';
-import {ICourse} from "../models.ts";
+import { ICourse, ITutorShort } from '../models.ts';
 
 interface CourseCreateUpdateModalProps {
     isOpen: boolean;
+    isLoading: boolean;
     onClose: () => void;
     onCourseAction: (values: any) => void;
     course?: ICourse;
-    setSubmittingRef: MutableRefObject<(isSubmitting: boolean) => void>;
+    tutors?: ITutorShort[];
 }
 
 interface IInitialValues {
@@ -24,15 +25,17 @@ interface IInitialValues {
     start: Date | null;
     end: Date | null;
     image?: string;
+    tutorUsername: string;
 }
 
-const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onClose, onCourseAction, course, setSubmittingRef }) => {
+const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onClose, onCourseAction, course, isLoading, tutors }) => {
     const initialValues = course
         ? {
             name: course.name,
             description: course.description,
             start: course.startDate ? new Date(course.startDate) : null,
             end: course.endDate ? new Date(course.endDate) : null,
+            tutorUsername: course.tutorUsername,
         }
         : {
             name: '',
@@ -40,6 +43,7 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
             start: null,
             end: null,
             image: '',
+            tutorUsername: '',
         };
 
     const onSubmit = (values: IInitialValues) => {
@@ -47,6 +51,7 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
             onCourseAction({
                 name: values.name,
                 description: values.description,
+                tutorUsername: values.tutorUsername,
                 start: values.start ? values.start.toISOString() : '',
                 end: values.end ? values.end.toISOString() : '',
             });
@@ -54,6 +59,7 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
             const formData = new FormData();
             formData.append('name', values.name);
             formData.append('description', values.description);
+            formData.append('tutorUsername', values.tutorUsername);
             formData.append('start', values.start ? values.start.toISOString() : '');
             formData.append('end', values.end ? values.end.toISOString() : '');
             formData.append('image', values.image || '');
@@ -61,6 +67,13 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
             onCourseAction(formData);
         }
     };
+
+    const tutorsOptions = useMemo(() => {
+        if (!tutors?.length) return [];
+
+        return tutors.map(item =>
+          ({value: item.username, label: item.lastname + item.firstname}));
+    }, [tutors])
 
     return (
         <Modal show={isOpen} onClose={onClose} className="relative">
@@ -72,14 +85,13 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
                         validationSchema={course ? courseEditValidationSchema : courseValidationSchema}
                         onSubmit={onSubmit}
                     >
-                        {({ handleSubmit, isSubmitting, isValid, dirty, setSubmitting }) => (
+                        {({ handleSubmit, isValid, dirty }) => (
                             <Form
                                 style={{ maxHeight: '80vh', overflowY: 'auto' }}
                                 className={'p-2'}
                                 onSubmit={(e) => {
                                     e.preventDefault();
                                     handleSubmit();
-                                    setSubmittingRef.current = setSubmitting;
                                 }}
                             >
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
@@ -89,6 +101,16 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
                                             field={field as never}
                                         />
                                     ))}
+                                    <FormFieldComponent
+                                      key={'tutorUsername'}
+                                      field={{
+                                          type: 'select',
+                                          name: 'tutorUsername',
+                                          label: 'Преподаватель',
+                                          placeholder: 'Выберите преподавателя',
+                                          options: tutorsOptions,
+                                      }}
+                                    />
                                 </div>
 
 
@@ -103,7 +125,7 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
                                     <Button
                                         type="submit"
                                         className="text-black focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                        disabled={isSubmitting || !isValid || !dirty}
+                                        disabled={isLoading || !isValid || !dirty}
                                     >
                                         {course ? 'Сохранить изменения' : 'Создать'}
                                     </Button>

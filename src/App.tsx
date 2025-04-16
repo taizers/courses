@@ -25,6 +25,7 @@ import Events from "./pages/Events.tsx";
 import Event from "./pages/Event.tsx";
 import AdminEvents from "./pages/AdminEvents.tsx";
 import Course from "./pages/Course.tsx";
+import AdminTutors from './pages/AdminTutors.tsx';
 
 const App: FC = () => {
     const dispatch = useAppDispatch();
@@ -85,6 +86,10 @@ const App: FC = () => {
                 {
                     path: 'admin-events',
                     Component: AdminEvents,
+                },
+                {
+                    path: 'admin-tutors',
+                    Component: AdminTutors,
                 },
                 {
                     path: "*",

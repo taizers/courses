@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import { Button } from 'flowbite-react';
 import {useGetQueryResponse} from "../types.ts";
 import {adminApiSlice} from "../store/reducers/AdminApiSlice.ts";
@@ -9,16 +9,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import CreateUpdateCourseModal from "../modals/CreateUpdateCourseModal.tsx";
-import {ICourse} from "../models.ts";
+import { ICourse, ITutorShort } from '../models.ts';
 import {createToast} from "../utils/toasts.ts";
 
 const AdminCourses: FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [editingCourse, setEditingCourse] = useState<ICourse | null>(null);
-
-    const setSubmittingRef = useRef<(isSubmitting: boolean) => void>(null!);
+    const [editingCourse, setEditingCourse] = useState<ICourse>(null!);
 
     const { data, error } = adminApiSlice.useGetAllCoursesQuery<useGetQueryResponse<ICourse[]>>('');
+    const { data: tutors, error: tutorsError } = adminApiSlice.useGetAllTutorsShortQuery<useGetQueryResponse<ITutorShort[]>>('');
 
     const [importCourses, { data: importCoursesData, error: importCoursesError }] =
         adminApiSlice.useImportCoursesMutation();
@@ -26,7 +25,7 @@ const AdminCourses: FC = () => {
         adminApiSlice.useCreateCourseMutation();
     const [updateCourse, { data: updateCourseData, error: updateCourseError, isLoading: updateCourseIsLoading }] =
         adminApiSlice.useUpdateCourseMutation();
-    const [deleteCourse, { data: deleteCourseData, error: deleteCourseError, isLoading: deleteCourseIsLoading }] =
+    const [deleteCourse, { error: deleteCourseError }] =
         adminApiSlice.useDeleteCourseMutation();
 
     useShowErrorToast(error);
@@ -34,6 +33,7 @@ const AdminCourses: FC = () => {
     useShowErrorToast(updateCourseError);
     useShowErrorToast(deleteCourseError);
     useShowErrorToast(importCoursesError);
+    useShowErrorToast(tutorsError);
 
     useEffect(() => {
         if (importCoursesData) {
@@ -42,18 +42,13 @@ const AdminCourses: FC = () => {
     }, [importCoursesData]);
 
     useEffect(() => {
-        setSubmittingRef.current && setSubmittingRef.current(false);
-    }, [createCourseError, updateCourseError]);
-
-    useEffect(() => {
         if (createCourseData !== undefined || updateCourseData !== undefined) {
             setIsModalOpen(false);
-            setSubmittingRef.current && setSubmittingRef.current(false);
         }
     }, [createCourseData, updateCourseData]);
 
     const openModal = () => {
-        setEditingCourse(null);
+        setEditingCourse(null!);
         setIsModalOpen(true);
     };
 
@@ -129,7 +124,8 @@ const AdminCourses: FC = () => {
                 onClose={() => setIsModalOpen(false)}
                 onCourseAction={handleCourseAction}
                 course={editingCourse}
-                setSubmittingRef={setSubmittingRef}
+                tutors={tutors}
+                isLoading={createCourseIsLoading || updateCourseIsLoading}
             />
         </div>
     );

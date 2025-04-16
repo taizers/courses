@@ -1,5 +1,5 @@
 import { Button } from "flowbite-react";
-import { getArrowRightIcon, getLongRightArrow, getPlayIcon } from "../utils/Icons.tsx";
+import { getArrowRightIcon, getPlayIcon } from "../utils/Icons.tsx";
 import { useNavigate } from "react-router-dom";
 
 const Info = () => {
@@ -7,7 +7,6 @@ const Info = () => {
 
     const onVideoClick = () => history("video");
     const onProgramsClick = () => history("courses");
-    const onNextClick = () => history("next");
 
     const renderImageBlock = (i: number) => (
         <div key={i} className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
@@ -22,7 +21,6 @@ const Info = () => {
     return (
         <div className="bg-white py-16 px-6 sm:px-12">
             <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Левый блок */}
                 <div className="md:text-left space-y-4 flex flex-col justify-between">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
@@ -49,16 +47,6 @@ const Info = () => {
                         <div className="flex gap-2 bg-gray-100 p-2 rounded-full">
                             {Array(3).fill("").map((_, i) => renderImageBlock(i))}
                         </div>
-                        <div>
-                            <div onClick={onNextClick}
-                                 className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200 relative cursor-pointer m-2">
-                                <img src="https://via.placeholder.com/150" alt="Фото"
-                                     className="w-full h-full object-cover"/>
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                                    {getLongRightArrow()}
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div className="mt-8 flex justify-between gap-3">
@@ -75,9 +63,7 @@ const Info = () => {
                     </div>
                 </div>
 
-                {/* Правый блок */}
                 <div className="space-y-6 flex flex-col justify-center">
-                    {/* Первый блок */}
                     <div style={{ height: "400px" }} className="bg-orange-300 rounded-lg shadow-lg relative">
                         <div
                             className="absolute left-5 bottom-4 flex flex-col items-center text-center bg-orange-100 p-4 rounded-full shadow-lg"
@@ -91,7 +77,6 @@ const Info = () => {
                         </div>
                     </div>
 
-                    {/* Второй и третий блоки */}
                     <div className="grid grid-cols-2 gap-4 w-full h-[200px]">
                         {Array(2).fill("").map((_, i) => (
                             <div key={i} className="relative rounded-lg overflow-hidden">

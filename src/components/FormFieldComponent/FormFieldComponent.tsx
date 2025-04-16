@@ -21,6 +21,9 @@ const FormFieldComponent: FC<FormFieldProps> = ({ field }) => {
                         id={field.name}
                         className="p-2 border rounded-lg bg-white dark:bg-gray-800 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                     >
+                        <option value="" disabled hidden>
+                          {field.placeholder || 'Выберите'}
+                        </option>
                         {field.options?.map((option) => (
                             <option key={option.value} value={option.value}>
                                 {option.label}
