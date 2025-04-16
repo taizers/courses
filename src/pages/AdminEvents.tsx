@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import { Button } from 'flowbite-react';
 import {useGetQueryResponse} from "../types.ts";
 import {adminApiSlice} from "../store/reducers/AdminApiSlice.ts";
@@ -14,7 +14,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const AdminEvents: FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [editingEvent, setEditingEvent] = useState<IEvent | null>(null);
-    const setSubmittingRef = useRef<(isSubmitting: boolean) => void>(null!);
 
     const { data, error } = adminApiSlice.useGetAllEventsQuery<useGetQueryResponse<IEvent[]>>('');
 
@@ -23,7 +22,7 @@ const AdminEvents: FC = () => {
     const [updateEvent, { data: updateEventData, error: updateEventError, isLoading: updateEventIsLoading }] =
         adminApiSlice.useUpdateEventMutation();
 
-    const [deleteEvent, { data: deleteEventData, error: deleteEventError, isLoading: deleteEventIsLoading }] =
+    const [deleteEvent, { error: deleteEventError }] =
         adminApiSlice.useDeleteEventMutation();
 
     useShowErrorToast(error);
@@ -32,13 +31,8 @@ const AdminEvents: FC = () => {
     useShowErrorToast(deleteEventError);
 
     useEffect(() => {
-        setSubmittingRef.current && setSubmittingRef.current(false);
-    }, [createEventError, updateEventError]);
-
-    useEffect(() => {
         if (createEventData !== undefined || updateEventData !== undefined) {
             setIsModalOpen(false);
-            setSubmittingRef.current && setSubmittingRef.current(false);
         }
     }, [createEventData, updateEventData]);
 
@@ -110,7 +104,7 @@ const AdminEvents: FC = () => {
                 onClose={() => setIsModalOpen(false)}
                 onEventAction={handleEventAction}
                 event={editingEvent}
-                setSubmittingRef={setSubmittingRef}
+                isLoading={createEventIsLoading || updateEventIsLoading}
             />
         </div>
     );

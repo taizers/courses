@@ -1,4 +1,4 @@
-import {FC, MutableRefObject} from 'react';
+import {FC} from 'react';
 import { Modal, Button } from 'flowbite-react';
 import { Formik, Form } from 'formik';
 import FormFieldComponent from '../components/FormFieldComponent/FormFieldComponent.tsx';
@@ -10,7 +10,7 @@ interface EventCreateUpdateModalProps {
     onClose: () => void;
     onEventAction: (values: any) => void;
     event: IEvent | null;
-    setSubmittingRef: MutableRefObject<(isSubmitting: boolean) => void>;
+    isLoading: boolean;
 }
 
 interface IInitialValues {
@@ -20,7 +20,7 @@ interface IInitialValues {
     image?: string;
 }
 
-const CreateUpdateEventModal: FC<EventCreateUpdateModalProps> = ({ isOpen, onClose, onEventAction, event, setSubmittingRef }) => {
+const CreateUpdateEventModal: FC<EventCreateUpdateModalProps> = ({ isOpen, onClose, onEventAction, event, isLoading }) => {
     const initialValues = event
         ? {
             name: event.name,
@@ -61,14 +61,13 @@ const CreateUpdateEventModal: FC<EventCreateUpdateModalProps> = ({ isOpen, onClo
                         validationSchema={event ? eventEditValidationSchema : eventValidationSchema}
                         onSubmit={onSubmit}
                     >
-                        {({ handleSubmit, isSubmitting, isValid, dirty, setSubmitting }) => (
+                        {({ handleSubmit, isValid, dirty }) => (
                             <Form
                                 style={{ maxHeight: '80vh', overflowY: 'auto' }}
                                 className={'p-2'}
                                 onSubmit={(e) => {
                                     e.preventDefault();
                                     handleSubmit();
-                                    setSubmittingRef.current = setSubmitting;
                                 }}
                             >
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
@@ -97,7 +96,7 @@ const CreateUpdateEventModal: FC<EventCreateUpdateModalProps> = ({ isOpen, onClo
                                     <Button
                                         type="submit"
                                         className="text-black focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                        disabled={isSubmitting || !isValid || !dirty}
+                                        disabled={isLoading || !isValid || !dirty}
                                     >
                                         {event ? 'Сохранить изменения' : 'Создать'}
                                     </Button>

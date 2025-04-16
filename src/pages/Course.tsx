@@ -1,17 +1,20 @@
 import { useParams } from 'react-router-dom';
 import { adminApiSlice } from "../store/reducers/AdminApiSlice.ts";
 import { useGetQueryResponse } from "../types.ts";
-import { useShowErrorToast } from "../hooks.ts";
+import { useAppSelector, useShowErrorToast } from '../hooks.ts';
 import NoData from "../components/NoData.tsx";
-import {courses} from "../mocks.ts";
+import { Button } from 'flowbite-react';
 
 const Course = () => {
     const { id } = useParams();
     const { data, error } = adminApiSlice.useGetCourseQuery<useGetQueryResponse<any>>(id);
+    const { user } = useAppSelector((state) => state.auth);
 
-    // const data = courses.find((e) => e.id.toString() === id);
+    const [courseRecord, { error: courseRecordError, isLoading: courseRecordLoading }] =
+      adminApiSlice.useCourseRecordMutation();
 
     useShowErrorToast(error);
+    useShowErrorToast(courseRecordError);
 
     return (
         <div className="max-w-screen-xl mx-auto p-6 min-h-screen flex flex-col items-center">
@@ -27,6 +30,10 @@ const Course = () => {
                     <div className="mt-3 text-gray-500">
                         <p className="text-sm italic">Дата начала: {new Date(data.start).toLocaleDateString()}</p>
                         <p className="text-sm italic">Дата окончания: {new Date(data.end).toLocaleDateString()}</p>
+                        {user?.username && !data.isRecorded &&
+                          <Button disabled={courseRecordLoading} className={'text-black'} onClick={() => courseRecord(id)}>
+                              Записаться на курс
+                          </Button>}
                     </div>
                 </div>
             )}

@@ -87,6 +87,14 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ['Event'],
     }),
+    courseRecord: builder.mutation({
+      query: (id) => ({
+        url: `/course/${id}/record`,
+        method: 'Post',
+        body: {},
+      }),
+      invalidatesTags: ['Course'],
+    }),
     createCourse: builder.mutation({
       query: (credentials) => ({
         url: '/course/new',
