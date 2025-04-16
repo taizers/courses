@@ -8,22 +8,10 @@ import UpdateProfileModal from '../modals/UpdateProfileModal.tsx';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 
-const profile = {
-  "username": "updatyed",
-  "firstName": "prprprpr",
-  "lastName": "inf",
-  "email": "updated@gmail.com",
-  "phone": "+375294852691",
-  "role": "ADMIN",
-  "isActive": true,
-  "age": 19,
-  "image": '/courses.webp'
-}
-
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const { data, error } = adminApiSlice.useGetAllTutorsQuery<useGetQueryResponse<IUser>>('');
+  const { data: profile, error } = adminApiSlice.useGetAllTutorsQuery<useGetQueryResponse<IUser>>('');
 
   const [updateProfile, { data: updateProfileData, error: updateProfileError, isLoading: updateProflieLoading }] =
     adminApiSlice.useUpdateProfileMutation();
