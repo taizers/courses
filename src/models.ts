@@ -32,8 +32,8 @@ export interface IUser {
 export interface ITutor {
     id: number;
     username: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     password: string;
     email: string;
     phone: string;

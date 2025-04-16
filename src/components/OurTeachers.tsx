@@ -15,8 +15,8 @@ const OurTeachers: FC = () => {
         if (!tutors) return [];
         return tutors.map(item => ({
             id: item.id,
-            name: item.lastname + item.firstname,
-            degree: '',
+            name: item.lastName + item.firstName,
+            degree: item.phone,
             image: item.image
         }))
     }, [tutors]);

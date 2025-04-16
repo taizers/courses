@@ -307,7 +307,7 @@ export const tutorFields = [
 ];
 
 export const tutorEditFields = [
-    { name: 'username', label: 'Имя пользователя', placeholder: 'Введите имя пользователя', type: 'text' },
+    { name: 'userame', label: 'Имя пользователя', placeholder: 'Введите имя пользователя', type: 'text' },
     { name: 'firstName', label: 'Имя', placeholder: 'Введите имя', type: 'text' },
     { name: 'lastName', label: 'Фамилия', placeholder: 'Введите фамилию', type: 'text' },
     { name: 'password', label: 'Пароль', placeholder: 'Введите пароль', type: 'password' },

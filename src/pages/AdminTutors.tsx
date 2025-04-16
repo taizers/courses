@@ -91,8 +91,8 @@ const AdminTutors: FC = () => {
               <img width={100} src={tutor.image} alt={tutor.username} />
             </td>
             <td className="px-6 py-4">{tutor.username}</td>
-            <td className="px-6 py-4">{tutor.firstname}</td>
-            <td className="px-6 py-4">{tutor.lastname}</td>
+            <td className="px-6 py-4">{tutor.firstName}</td>
+            <td className="px-6 py-4">{tutor.lastName}</td>
             <td className="px-6 py-4">{tutor.email}</td>
             <td className="px-6 py-4">{tutor.password}</td>
             <td className="px-6 py-4">{tutor.phone}</td>

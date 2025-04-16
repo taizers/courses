@@ -22,8 +22,8 @@ const CreateUpdateTutorModal: FC<TutorCreateUpdateModalProps> = ({ isOpen, onClo
     const initialValues = tutor
         ? {
             username: tutor.username,
-            firstname: tutor.firstname,
-            lastname: tutor.lastname,
+            firstName: tutor.firstName,
+            lastName: tutor.lastName,
             email: tutor.email,
             password: tutor.password,
             phone: tutor.phone,
@@ -31,8 +31,8 @@ const CreateUpdateTutorModal: FC<TutorCreateUpdateModalProps> = ({ isOpen, onClo
         }
         : {
             username: '',
-              firstname: '',
-              lastname: '',
+              firstName: '',
+              lastName: '',
               email: '',
               password: '',
               phone: '',
@@ -44,8 +44,8 @@ const CreateUpdateTutorModal: FC<TutorCreateUpdateModalProps> = ({ isOpen, onClo
         if (tutor) {
             onTutorAction({
                 username: values.username,
-                firstname: values.firstname,
-                lastname: values.lastname,
+                firstName: values.firstName,
+                lastName: values.lastName,
                 email: values.email,
                 password: values.password,
                 phone: values.phone,
@@ -54,8 +54,8 @@ const CreateUpdateTutorModal: FC<TutorCreateUpdateModalProps> = ({ isOpen, onClo
         } else {
             const formData = new FormData();
             formData.append('username', values.username);
-            formData.append('firstname', values.firstname);
-            formData.append('lastname', values.lastname);
+            formData.append('firstName', values.firstName);
+            formData.append('lastName', values.lastName);
             formData.append('email', values.email);
             formData.append('password', values.password);
             formData.append('phone', values.phone);
