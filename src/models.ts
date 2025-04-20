@@ -13,6 +13,7 @@ export interface ICourse {
     startDate: Date | string;
     endDate: Date | string;
     image: string;
+    pathToImage: string;
     tutorUsername: string;
 }
 
@@ -27,6 +28,7 @@ export interface IUser {
     role: string;
     isActive: boolean;
     image: string;
+    pathToImage: string;
 }
 
 export interface ITutor {
@@ -40,6 +42,7 @@ export interface ITutor {
     age: number;
     isActive: boolean;
     image: string;
+    pathToImage: string;
 }
 
 export interface ITutorShort {

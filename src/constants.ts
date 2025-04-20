@@ -1,5 +1,5 @@
 export const apiUrl = '/api';
-export const apiImageUrl = '/images/';
+export const apiImageUrl = '/api/';
 export const defaultStartPage = 0;
 export const defaultLimit = 10;
 export const defaultDelay = 500;

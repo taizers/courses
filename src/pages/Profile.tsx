@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import UpdateProfileModal from '../modals/UpdateProfileModal.tsx';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import { apiImageUrl } from '../constants.ts';
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -35,7 +36,8 @@ const Profile = () => {
             <div className="flex flex-col md:flex-row items-center gap-6 p-6">
               <img
                 src={
-                  profile.image ||
+                  profile.image ?
+                   `${apiImageUrl}${profile.pathToImage}` :
                   '/user-icon.png'
                 }
                 alt={profile.username}

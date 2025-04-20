@@ -17,7 +17,7 @@ const OurTeachers: FC = () => {
           id: item.id,
           name: `${item.lastName} ${item.firstName}`,
           degree: item.phone,
-          image: item.image,
+          pathToImage: item.pathToImage,
         }));
     }, [tutors]);
 
