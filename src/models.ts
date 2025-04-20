@@ -44,6 +44,6 @@ export interface ITutor {
 
 export interface ITutorShort {
     username: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
 }
