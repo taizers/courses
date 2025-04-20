@@ -79,7 +79,6 @@ export const registerValidationSchema = Yup.object().shape({
         )
         .required('Обязательное поле'),
     password: Yup.string()
-        .min(6, 'Минимум 6 символов')
         .required('Обязательное поле'),
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'Пароли не совпадают')
@@ -109,7 +108,6 @@ export const loginValidationSchema = Yup.object().shape({
     username: Yup.string()
         .required('Обязательное поле'),
     password: Yup.string()
-        .min(6, 'Минимум 6 символов')
         .required('Поле обязательно для заполнения'),
 });
 
@@ -239,7 +237,7 @@ export const userValidationSchema = Yup.object({
     username: Yup.string().required('Имя пользователя обязательно'),
     firstName: Yup.string().required('Имя обязательно'),
     lastName: Yup.string().required('Фамилия обязательна'),
-    password: Yup.string().min(6, 'Пароль должен содержать минимум 6 символов').required('Пароль обязателен'),
+    password: Yup.string().required('Пароль обязателен'),
     email: Yup.string().email('Неверный формат электронной почты').required('Электронная почта обязательна'),
     phone: Yup.string()
         .matches(/^\+?\d{1,4}?\s?\(?\d{1,5}?\)?\s?\d{1,4}?\s?\d{1,4}?\s?\d{1,9}$/, 'Неверный формат номера телефона')
@@ -268,7 +266,7 @@ export const tutorValidationSchema = Yup.object({
     age: Yup.number()
       .min(18, 'Возраст должен быть 18 лет или больше')
       .required('Обязательное поле'),
-    password: Yup.string().min(6, 'Пароль должен содержать минимум 6 символов').required('Пароль обязателен'),
+    password: Yup.string().required('Пароль обязателен'),
     email: Yup.string().email('Неверный формат электронной почты').required('Электронная почта обязательна'),
     phone: Yup.string()
       .matches(/^\+?\d{1,4}?\s?\(?\d{1,5}?\)?\s?\d{1,4}?\s?\d{1,4}?\s?\d{1,9}$/, 'Неверный формат номера телефона')
@@ -288,7 +286,7 @@ export const tutorEditValidationSchema = Yup.object({
     age: Yup.number()
       .min(18, 'Возраст должен быть 18 лет или больше')
       .required('Обязательное поле'),
-    password: Yup.string().min(6, 'Пароль должен содержать минимум 6 символов').required('Пароль обязателен'),
+    password: Yup.string().required('Пароль обязателен'),
     email: Yup.string().email('Неверный формат электронной почты').required('Электронная почта обязательна'),
     phone: Yup.string()
       .matches(/^\+?\d{1,4}?\s?\(?\d{1,5}?\)?\s?\d{1,4}?\s?\d{1,4}?\s?\d{1,9}$/, 'Неверный формат номера телефона')
