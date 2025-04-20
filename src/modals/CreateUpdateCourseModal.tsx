@@ -72,7 +72,7 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
         if (!tutors?.length) return [];
 
         return tutors.map(item =>
-          ({value: item.username, label: item.lastName + item.firstName}));
+          ({value: item.username, label: `${item.lastName} ${item.firstName}`}));
     }, [tutors])
 
     return (
