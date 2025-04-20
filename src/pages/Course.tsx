@@ -38,10 +38,10 @@ const Course = () => {
             </p>
             <div className="mt-3 text-gray-500">
               <p className="text-sm italic">
-                Дата начала: {new Date(data.start).toLocaleDateString()}
+                Дата начала: {new Date(data.startDate).toLocaleDateString()}
               </p>
               <p className="text-sm italic">
-                Дата окончания: {new Date(data.end).toLocaleDateString()}
+                Дата окончания: {new Date(data.endDate).toLocaleDateString()}
               </p>
               {user?.username && !data.isRecorded && (
                 <Button
