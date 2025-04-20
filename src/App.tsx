@@ -27,6 +27,7 @@ import AdminEvents from "./pages/AdminEvents.tsx";
 import Course from "./pages/Course.tsx";
 import AdminTutors from './pages/AdminTutors.tsx';
 import Profile from './pages/Profile.tsx';
+import { adminRole, tutorRole } from './constants.ts';
 
 const App: FC = () => {
     const dispatch = useAppDispatch();
@@ -51,10 +52,10 @@ const App: FC = () => {
                     index: true,
                     Component: Main,
                 },
-                {
-                    path: 'users',
-                    Component: Users,
-                },
+                // {
+                //     path: 'users',
+                //     Component: Users,
+                // },
                 {
                     path: 'courses',
                     Component: Courses,
@@ -83,18 +84,22 @@ const App: FC = () => {
                 {
                     path: 'admin-courses',
                     Component: AdminCourses,
+                    loader: (request) => protectedByRoleLoader(request, [adminRole, tutorRole]),
                 },
                 {
                     path: 'admin-events',
                     Component: AdminEvents,
+                    loader: (request) => protectedByRoleLoader(request, [adminRole]),
                 },
                 {
                     path: 'admin-tutors',
                     Component: AdminTutors,
+                    loader: (request) => protectedByRoleLoader(request, [adminRole]),
                 },
                 {
                     path: 'profile',
                     Component: Profile,
+                    loader: protectedLoader,
                 },
                 {
                     path: "*",
