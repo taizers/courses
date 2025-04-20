@@ -5,18 +5,8 @@ import { useNavigate } from "react-router-dom";
 const Info = () => {
     const history = useNavigate();
 
-    const onVideoClick = () => history("video");
-    const onProgramsClick = () => history("courses");
-
-    const renderImageBlock = (i: number) => (
-        <div key={i} className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
-            <img
-                src="https://via.placeholder.com/150"
-                alt={`Фото ${i + 1}`}
-                className="w-full h-full object-cover"
-            />
-        </div>
-    );
+    const onVideoClick = () => history("/about-us");
+    const onProgramsClick = () => history("/courses");
 
     return (
         <div className="bg-white py-16 px-6 sm:px-12">
@@ -45,7 +35,27 @@ const Info = () => {
 
                     <div className="flex flex-wrap justify-between gap-3">
                         <div className="flex gap-2 bg-gray-100 p-2 rounded-full">
-                            {Array(3).fill("").map((_, i) => renderImageBlock(i))}
+                            <div className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
+                                <img
+                                  src="/robot-tr.jpg"
+                                  alt={`Фото 1`}
+                                  className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
+                                <img
+                                  src="/robot-tt.jpeg"
+                                  alt={`Фото 2`}
+                                  className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
+                                <img
+                                  src="/robot-tm.jpeg"
+                                  alt={`Фото 3`}
+                                  className="w-full h-full object-cover"
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -57,17 +67,18 @@ const Info = () => {
                         <div className="rounded-xl bg-gray-100 flex p-4 items-center gap-4">
                             <p>Множество филиалов и разнообразные программы для каждого возраста</p>
                             <div className="w-32 h-20 overflow-hidden rounded-xl border-4">
-                                <img src="https://via.placeholder.com/150" alt="Фото" className="w-full h-full object-cover" />
+                                <img src="/robot.avif" alt="Фото" className="w-full h-full object-cover" />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="space-y-6 flex flex-col justify-center">
-                    <div style={{ height: "400px" }} className="bg-orange-300 rounded-lg shadow-lg relative">
+                    <div style={{ height: "400px" }} className="bg-robot bg-orange-300 rounded-lg shadow-lg relative">
                         <div
                             className="absolute left-5 bottom-4 flex flex-col items-center text-center bg-orange-100 p-4 rounded-full shadow-lg"
-                            style={{ maxWidth: "160px" }}
+                            style={{ maxWidth: "160px", cursor: "pointer" }}
+                            onClick={() => history('/about-us')}
                         >
                             <p className="font-bold text-sm">Читай</p>
                             <p className="font-bold text-sm mb-2">больше о нас</p>
@@ -75,23 +86,6 @@ const Info = () => {
                                 ↓
                             </div>
                         </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 w-full h-[200px]">
-                        {Array(2).fill("").map((_, i) => (
-                            <div key={i} className="relative rounded-lg overflow-hidden">
-                                <img
-                                    src="https://via.placeholder.com/150"
-                                    alt="Фото"
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
-                                <div className="bg-orange-100 p-4 rounded-lg shadow-lg text-center w-full absolute bottom-0">
-                                    <p className="mt-2 text-sm font-medium text-ellipsis overflow-hidden">
-                                        Давайте поговорим!
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>

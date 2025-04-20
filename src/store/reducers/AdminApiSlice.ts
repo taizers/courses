@@ -89,7 +89,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     }),
     courseRecord: builder.mutation({
       query: (id) => ({
-        url: `/course/${id}/record`,
+        url: `/participation/${id}`,
         method: 'Post',
         body: {},
       }),

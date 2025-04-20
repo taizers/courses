@@ -63,3 +63,10 @@ html, body {
     max-width: calc(25% - 1em);
   }
 }
+
+.bg-robot {
+  background-image: url("/robot-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
