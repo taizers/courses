@@ -18,13 +18,13 @@ const ContactPage = () => {
 
             <section className="contact-phones">
                 <h3><FaPhone/> Телефоны</h3>
-                <p>📞 +375 (33) 123-45-67</p>
-                <p>📞 +375 (33) 765-43-21</p>
+                <p>📞 +375 (44) 752-25-71</p>
+                <p>📞 +375 (25) 954-79-96</p>
             </section>
 
             <section className="contact-email">
                 <h3><FaEnvelope/> Email</h3>
-                <p>📧 <a href="mailto:info@robotkids.ru">info@robotkids.ru</a></p>
+                <p>📧 <a href="mailto:roboklass.by@gmail.com">roboklass.by@gmail.com</a></p>
             </section>
 
             <section className="contact-socials">
@@ -43,8 +43,9 @@ const ContactPage = () => {
 
             <section className="contact-hours">
                 <h3><FaClock/> Расписание работы</h3>
-                <p>Понедельник — Пятница: 10:00 - 20:00</p>
-                <p>Суббота — Воскресенье: 10:00 - 18:00</p>
+                <p>Пн — Пт: 10:00 - 19:00</p>
+                <p>Сб: 10:00 - 14:00</p>
+                <p>Вс: выходной</p>
             </section>
 
             <section className="contact-map">

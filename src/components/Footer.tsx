@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { getEmailIcon, getFaceBookIcon, getInstagramIcon } from "../utils/Icons.tsx";
+import { getEmailIcon, getInstagramIcon } from "../utils/Icons.tsx";
+import { FaTelegramPlane } from 'react-icons/fa';
 
 const Footer: FC = () => {
     const pages = [
@@ -11,9 +12,9 @@ const Footer: FC = () => {
     ];
 
     const social = [
-        { icon: getInstagramIcon(), text: 'Instagram', link: 'instagram' },
-        { icon: getFaceBookIcon(), text: 'Facebook', link: 'facebook' },
-        { icon: getEmailIcon(), text: 'Email', link: 'email' },
+        { icon: getInstagramIcon(), text: 'Instagram', link: 'https://instagram.com/robotkids' },
+        { icon: <FaTelegramPlane/>, text: 'Telegram', link: 'https://t.me/robotkids' },
+        { icon: getEmailIcon(), text: 'Email', link: 'mailto:roboklass.by@gmail.com' },
     ];
 
     return (
@@ -49,6 +50,7 @@ const Footer: FC = () => {
                             <a
                                 key={network.link}
                                 href={network.link}
+                                target="_blank"
                                 className="text-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center space-x-2"
                             >
                                 {network.icon}

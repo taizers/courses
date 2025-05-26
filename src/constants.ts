@@ -10,7 +10,7 @@ export const notFoundTextColor = 'black';
 export const notFoundTitle = '404';
 export const notFoundSubTitle = 'The page you’re looking for doesn’t exist.';
 
-export const address = 'г. Минск, ул. Немиги, 36';
+export const address = 'г. Гродно, ул. Мостовая 39, кабинет 241';
 
 export const userRole = 'USER';
 export const tutorRole = 'TUTOR';

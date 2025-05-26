@@ -73,7 +73,7 @@ const CreateUpdateCourseModal: FC<CourseCreateUpdateModalProps> = ({ isOpen, onC
 
         return tutors.map(item =>
           ({value: item.username, label: `${item.lastName} ${item.firstName}`}));
-    }, [tutors])
+    }, [tutors]);
 
     return (
         <Modal show={isOpen} onClose={onClose} className="relative">
