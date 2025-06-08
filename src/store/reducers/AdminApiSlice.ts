@@ -117,6 +117,12 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ['Course'],
     }),
+    getAllCoursesShort: builder.query({
+      query: () => ({
+        url: '/course/short',
+      }),
+      providesTags: ['Course'],
+    }),
     getCourse: builder.query({
       query: (id) => ({
         url: `/course/${id}`,
@@ -140,7 +146,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     }),
     deleteTutor: builder.mutation({
       query: (id) => ({
-        url: `/tutors/${id}`,
+        url: `admin/tutors/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Tutor'],
@@ -152,6 +158,13 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         body: {username}
       }),
       invalidatesTags: ['Tutor'],
+    }),
+    sendFeedback: builder.mutation({
+      query: (data) => ({
+        url: `feedback`,
+        method: 'POST',
+        body: data,
+      }),
     }),
   }),
 });

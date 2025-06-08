@@ -6,6 +6,7 @@ import NoData from "../components/NoData.tsx";
 import SearchField from "../components/SearchField.tsx";
 import {useMemo, useState} from "react";
 import { apiImageUrl } from '../constants.ts';
+import StudioInfoSection from '../components/StudioInfoSection.tsx';
 
 const Events = () => {
     const { data, error } = adminApiSlice.useGetAllEventsQuery<useGetQueryResponse<any[]>>('');
@@ -21,6 +22,7 @@ const Events = () => {
 
     return (
       <div className="max-w-screen-md mx-auto p-4 space-y-4">
+        <StudioInfoSection />
         <SearchField
           search={search}
           setSearch={setSearch}

@@ -23,7 +23,7 @@ const Course = () => {
           <div className="w-full p-6 border rounded-lg shadow-lg bg-white flex flex-col">
             <img
               src={
-                data.image?.startsWith('/')
+                data.pathToImage?.startsWith('/')
                   ? `${apiImageUrl}${data.pathToImage}`
                   : '/placeholder.jpg'
               }

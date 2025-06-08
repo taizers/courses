@@ -50,3 +50,8 @@ export interface ITutorShort {
     firstName: string;
     lastName: string;
 }
+
+export interface ICourseShort {
+    id: number;
+    name: string;
+}

@@ -80,7 +80,7 @@ const AdminCourses: FC = () => {
           <h2 className="text-xl font-semibold">Курсы</h2>
           <div style={{ display: 'flex', gap: '10px' }}>
             <Button className={'text-black'} onClick={onDownloadCourses}>
-              Загрузить курсы
+              Выгрузить курсы
             </Button>
             <Button className={'text-black'} onClick={openModal}>
               Создать курс

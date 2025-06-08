@@ -37,21 +37,21 @@ const Info = () => {
                         <div className="flex gap-2 bg-gray-100 p-2 rounded-full">
                             <div className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
                                 <img
-                                  src="/robot-tr.jpg"
+                                  src="/robot-1.png"
                                   alt={`Фото 1`}
                                   className="w-full h-full object-cover"
                                 />
                             </div>
                             <div className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
                                 <img
-                                  src="/robot-tt.jpeg"
+                                  src="/robot-2.png"
                                   alt={`Фото 2`}
                                   className="w-full h-full object-cover"
                                 />
                             </div>
                             <div className="w-32 h-32 overflow-hidden rounded-full border-4 border-gray-200">
                                 <img
-                                  src="/robot-tm.jpeg"
+                                  src="/robot-3.png"
                                   alt={`Фото 3`}
                                   className="w-full h-full object-cover"
                                 />

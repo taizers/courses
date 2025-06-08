@@ -1,59 +1,85 @@
 import { feedBackFields, feedBackValidationSchema } from "../utils/formFields.ts";
 import { Form, Formik } from "formik";
 import FormFieldComponent from "./FormFieldComponent/FormFieldComponent.tsx";
-import { authApiSlice } from "../store/reducers/AuthApiSlice.ts";
+import { adminApiSlice } from '../store/reducers/AdminApiSlice.ts';
+import { useGetQueryResponse } from '../types.ts';
+import { ICourseShort } from '../models.ts';
+import { useShowErrorToast } from '../hooks.ts';
+import { useMemo } from 'react';
 
 interface FormValues {
-    [key: string]: string;
+  [key: string]: string;
 }
 
 const FeedBackForm = () => {
-    const initialValues: FormValues = feedBackFields.reduce((acc, field) => {
-        acc[field.name] = '';
-        return acc;
-    }, {} as FormValues);
+  const { data: courses, error: coursesError } = adminApiSlice.useGetAllCoursesShortQuery<useGetQueryResponse<ICourseShort[]>>('');
 
-    const [login, { data: loginData, error: loginError, isLoading }] =
-        authApiSlice.useLoginMutation();
+  const coursesList = useMemo(() => courses?.map((course) => ({value: course.id, label: course.name})) || [], [courses]);
 
-    return (
-        <div className="max-w-4xl mx-auto space-y-6 mt-8">
-            <h3 className="text-2xl font-extrabold text-gray-900 dark:text-gray-300 text-center">
-                Оставьте заявку на любую из понравившихся вам программ
-            </h3>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={feedBackValidationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    login(values);
-                    setSubmitting(false);
-                }}
-            >
-                {({isSubmitting}) => (
-                    <Form className="space-y-4 max-w-4xl mx-auto">
-                        <div className={'bg-orange-300 p-4 rounded-xl'}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-orange-50 p-2 rounded-xl">
-                                {feedBackFields.map((field) => (
-                                    <FormFieldComponent key={field.name} field={field}/>
-                                ))}
-                                <div className="md:col-span-1 col-span-1 flex flex-col mt-auto justify-end">
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting || isLoading}
-                                        className={`w-full p-2 text-white rounded-lg 
-                                    ${isLoading ? 'bg-gray-400' : 'bg-orange-300 hover:bg-orange-500'}
-                                    disabled:opacity-50`}
-                                    >
-                                        {isLoading ? 'Загрузка...' : 'Отправить'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
-        </div>
-    );
+  const fields = [
+    ...feedBackFields,
+    {
+      name: 'program',
+      type: 'select',
+      label: 'Выбранная программа:',
+      placeholder: '',
+      options: [
+        { value: '', label: 'Выберите программу' },
+        ...coursesList,
+      ],
+    },
+  ];
+
+  const initialValues: FormValues = fields.reduce((acc, field) => {
+    acc[field.name] = "";
+    return acc;
+  }, {} as FormValues);
+
+  const [send, { isLoading, error }] = adminApiSlice.useSendFeedbackMutation();
+
+  useShowErrorToast(error);
+  useShowErrorToast(coursesError);
+
+  return (
+    <div className="max-w-screen-xl mx-auto mt-8 px-4">
+      <div className="bg-white dark:bg-gray-900 shadow-lg rounded-xl p-8 border border-gray-200 dark:border-gray-700">
+        <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
+          Оставьте заявку
+        </h3>
+
+        <Formik
+          initialValues={initialValues}
+          validationSchema={feedBackValidationSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            send(values);
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {fields.map((field) => (
+                <FormFieldComponent key={field.name} field={field as any} />
+              ))}
+
+              <div style={{marginTop: 'auto'}} className="md:col-span-2">
+                <button
+                  type="submit"
+                  disabled={isSubmitting || isLoading}
+                  className={`w-full py-3 px-5 text-sm font-medium text-white rounded-lg transition-colors
+                    ${isLoading || isSubmitting
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-orange-300 hover:bg-orange-400 focus:ring-4 focus:ring-orange-100'}
+                    focus:outline-none`}
+                >
+                  {isLoading ? "Загрузка..." : "Отправить"}
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+  );
 };
 
 export default FeedBackForm;

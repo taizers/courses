@@ -133,18 +133,6 @@ export const feedBackFields: FormField[] = [
         label: 'Ваш номер телефона:',
         placeholder: 'Введите номер телефона',
     },
-    {
-        name: 'reason',
-        type: 'select',
-        label: 'Выбранная программа:',
-        placeholder: '',
-        options: [
-            { value: '', label: 'Выберите программу' },
-            { value: 'prog1', label: 'Программа 1' },
-            { value: 'prog2', label: 'Программа 2' },
-            { value: 'prog3', label: 'Программа 3' },
-        ],
-    },
 ];
 
 export const feedBackValidationSchema = Yup.object().shape({
@@ -158,8 +146,9 @@ export const feedBackValidationSchema = Yup.object().shape({
             /^(\+?\d{1,3}[-.\s]?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/,
             'Введите корректный номер телефона'
         ),
-    reason: Yup.string()
-        .required('Выберите причину обращения'),
+    program: Yup.string()
+        .min(1, 'Программа обязательна')
+        .required('Программа обязательна'),
 });
 
 export const courseValidationSchema = Yup.object({
